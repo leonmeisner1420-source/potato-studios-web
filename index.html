@@ -1,82 +1,906 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Potato Studios – App Download</title>
-    <style>
-        body {
-            background: #0f111a;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-        .box {
-            max-width: 680px;
-            width: 100%;
-            background: #1a1d2d;
-            border: 2px solid #8a2be2;
-            border-radius: 14px;
-            padding: 30px;
-            text-align: center;
-        }
-        h1 { color: #00ff88; margin-top: 0; letter-spacing: 2px; }
-        .btn {
-            display: inline-block;
-            background: #00ff88;
-            color: #0f111a;
-            font-weight: bold;
-            text-decoration: none;
-            padding: 14px 24px;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-        .crew {
-            text-align: left;
-            background: #121522;
-            padding: 16px;
-            border-radius: 10px;
-            margin: 18px 0;
-            line-height: 1.7;
-        }
-        footer {
-            border-top: 1px solid #2b314d;
-            padding-top: 14px;
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-        a { color: #00ff88; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Potato Studios – Admin & Portal</title>
+  <style>
+    :root {
+      --bg: #0f131a;
+      --panel: #171d28;
+      --panel-2: #1f2736;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #22c55e;
+      --accent-2: #3b82f6;
+      --danger: #ef4444;
+      --border: #2c374b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 22px 16px 56px;
+    }
+
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+    }
+
+    .app-title h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      color: var(--accent);
+    }
+
+    .app-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .header-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .card h2, .card h3 {
+      margin-top: 0;
+      font-size: 1.15rem;
+    }
+
+    .card-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .card-header-row h2 {
+      margin: 0;
+    }
+
+    .login-panel {
+      max-width: 440px;
+      margin: 24px auto;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 0.94rem;
+      margin-bottom: 11px;
+    }
+
+    textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0 14px;
+    }
+
+    .checkbox-row input {
+      width: auto;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    .checkbox-row label {
+      margin: 0;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .roles-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 11px;
+    }
+
+    .role-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .role-option input {
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    .role-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .role-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      background: rgba(59, 130, 246, 0.16);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+
+    button, .btn-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    button:hover, .btn-link:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #05200e;
+    }
+
+    .btn-blue {
+      background: var(--accent-2);
+      color: #ffffff;
+    }
+
+    .btn-ghost {
+      background: var(--panel-2);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.16);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.45);
+    }
+
+    .status-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: rgba(34, 197, 94, 0.15);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
+
+    .alert {
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .alert.ok {
+      display: block;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #bbf7d0;
+    }
+
+    .alert.err {
+      display: block;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fecaca;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .pw-text {
+      display: inline-block;
+      transition: filter 0.18s ease, opacity 0.18s ease;
+      user-select: none;
+    }
+
+    .pw-blurred .pw-text {
+      filter: blur(5px);
+      opacity: 0.78;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .shot {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .shot img {
+      width: 100%;
+      height: 145px;
+      object-fit: cover;
+      display: block;
+      background: #0b0e14;
+    }
+
+    .shot-info {
+      padding: 10px 12px;
+    }
+
+    .shot-info h4 {
+      margin: 0 0 4px;
+      font-size: 0.94rem;
+    }
+
+    .shot-info p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .version-footer {
+      margin-top: 26px;
+      text-align: right;
+      font-size: 0.72rem;
+      color: #64748b;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
-    <div class="box">
-        <h1>POTATO STUDIOS</h1>
-        <p>Offizielle Windows-App (.exe) für das Studio-Team</p>
-
-        <a class="btn" href="Potato_Studios.exe" download="Potato_Studios.exe">
-            Potato_Studios.exe herunterladen
+  <div class="container">
+    <header class="app-header">
+      <div class="app-title">
+        <h1>Potato Studios</h1>
+        <p id="headerSubtitle">Login &amp; Portal</p>
+      </div>
+      <div class="header-controls">
+        <a class="btn-link btn-blue" href="Potato_Studios.exe" download>
+          Potato_Studios.exe herunterladen
         </a>
+        <span id="userBadge" class="status-pill hidden"></span>
+        <button id="logoutBtn" class="btn-ghost hidden" type="button">Abmelden</button>
+      </div>
+    </header>
 
-        <div class="crew">
-            <strong>Team &amp; Rollen:</strong>
-            <ul>
-                <li><strong>Leon:</strong> Administrator (Zugriff auf alles, Accounts &amp; Passwörter)</li>
-                <li><strong>Anton:</strong> Designer</li>
-                <li><strong>Michael:</strong> Mitdesigner / Musikmacher</li>
-                <li><strong>Yehor:</strong> Programmierer</li>
-                <li><strong>Danilo:</strong> Programmierer</li>
-                <li><strong>Albert:</strong> Spieletester</li>
-            </ul>
+    <div id="alertBox" class="alert"></div>
+
+    <!-- Login -->
+    <section id="loginView">
+      <div class="card login-panel">
+        <h2>Einloggen</h2>
+        <form id="loginForm">
+          <label for="loginUser">Username</label>
+          <input id="loginUser" type="text" placeholder="z. B. Leon" required />
+
+          <label for="loginPass">Passwort</label>
+          <input id="loginPass" type="password" placeholder="Passwort eingeben" required />
+
+          <div class="checkbox-row">
+            <input id="stayLoggedIn" type="checkbox" />
+            <label for="stayLoggedIn">Angemeldet bleiben</label>
+          </div>
+
+          <button class="btn-primary" type="submit">Einloggen</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Admin / Vollzugriff-Bereich nach Login -->
+    <section id="adminView" class="hidden">
+      <div class="grid-2">
+        <!-- Neuer Account erstellen -->
+        <div class="card">
+          <h2>Neuer Account erstellen</h2>
+          <p style="color: var(--muted); margin-top: 0; font-size: 0.88rem;">
+            Username, Passwort festlegen und eine oder mehrere Rollen anhängen.
+          </p>
+          <form id="createForm">
+            <label for="createUser">Username</label>
+            <input id="createUser" type="text" placeholder="Neuer Username" required />
+
+            <label for="createPass">Passwort</label>
+            <input id="createPass" type="password" placeholder="Neues Passwort" required />
+
+            <label>Rollen anhängen (mehrere möglich)</label>
+            <div id="createRolesList" class="roles-box"></div>
+
+            <label for="createExtraRole">Weitere Rolle anhängen (optional, mit Komma)</label>
+            <input id="createExtraRole" type="text" placeholder="z. B. Level-Design, Sound" />
+
+            <button class="btn-primary" type="submit">Erstellen</button>
+          </form>
         </div>
 
-        <footer>
-            Admin / Kontakt: <a href="mailto:Leon.meisner1420@gmail.com">Leon.meisner1420@gmail.com</a>
-        </footer>
-    </div>
+        <!-- Accounts, Rollen und Passwörter verwalten -->
+        <div class="card">
+          <div class="card-header-row">
+            <h2>Accounts, Rollen und Passwörter verwalten</h2>
+            <button id="togglePwBtn" class="btn-ghost" type="button">Passwörter anzeigen</button>
+          </div>
+          <p style="color: var(--muted); margin-top: 0; font-size: 0.88rem;">
+            Admin-Vollzugriff: Bearbeiten oder Löschen.
+          </p>
+
+          <div id="tableWrapper" class="pw-blurred" style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Passwort</th>
+                  <th>Rolle</th>
+                  <th>Aktionen</th>
+                </tr>
+              </thead>
+              <tbody id="accountRows"></tbody>
+            </table>
+          </div>
+
+          <!-- Bearbeiten-Panel -->
+          <div id="editPanel" class="card hidden" style="margin-top: 14px; background: var(--panel-2);">
+            <h3>Bearbeiten: <span id="editTargetName"></span></h3>
+            <input id="editOldUser" type="hidden" />
+
+            <label for="editUser">Username</label>
+            <input id="editUser" type="text" required />
+
+            <label for="editPass">Passwort</label>
+            <input id="editPass" type="text" required />
+
+            <label>Rollen anhängen (mehrere möglich)</label>
+            <div id="editRolesList" class="roles-box"></div>
+
+            <label for="editExtraRole">Weitere Rolle anhängen (optional, mit Komma)</label>
+            <input id="editExtraRole" type="text" placeholder="z. B. Level-Design, Sound" />
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button id="saveEditBtn" class="btn-primary" type="button">Speichern</button>
+              <button id="cancelEditBtn" class="btn-ghost" type="button">Abbrechen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eigene Bilder / Was ich zurzeit gemacht habe -->
+      <div class="card">
+        <h2>Was ich zurzeit gemacht habe (Eigene Bilder)</h2>
+        <p style="color: var(--muted); margin-top: 0; font-size: 0.88rem;">
+          Eigene Bilder oder Screenshots hinzufügen, was du gerade gebaut oder gemacht hast.
+        </p>
+
+        <form id="updateImageForm">
+          <label for="updateTitle">Titel</label>
+          <input id="updateTitle" type="text" placeholder="z. B. Neues Menü oder Sprite" required />
+
+          <label for="updateText">Was hast du zurzeit gemacht?</label>
+          <textarea id="updateText" placeholder="Kurze Beschreibung..."></textarea>
+
+          <label for="updateFile">Eigenes Bild auswählen</label>
+          <input id="updateFile" type="file" accept="image/*" required style="margin-bottom: 12px;" />
+
+          <button class="btn-blue" type="submit">Bild hinzufügen</button>
+        </form>
+
+        <div id="updateGallery" class="gallery"></div>
+      </div>
+    </section>
+
+    <footer class="version-footer">Version 1.1</footer>
+  </div>
+
+  <script>
+    const STORAGE_USERS = "potato_studios_app_users_v1";
+    const STORAGE_PERSIST = "potato_studios_app_session_v1";
+    const STORAGE_TEMP = "potato_studios_app_session_temp_v1";
+    const STORAGE_GALLERY = "potato_studios_app_gallery_v1";
+
+    const ROLES = [
+      "Administrator",
+      "Designer",
+      "Mitdesigner / Musikmacher",
+      "Programmierer",
+      "Spieletester"
+    ];
+
+    const INITIAL_USERS = [
+      { username: "Leon", password: "admin123", roles: ["Administrator"] },
+      { username: "Anton", password: "anton123", roles: ["Designer"] },
+      { username: "Michael", password: "michael123", roles: ["Mitdesigner / Musikmacher"] },
+      { username: "Yehor", password: "yehor123", roles: ["Programmierer"] },
+      { username: "Danilo", password: "danilo123", roles: ["Programmierer"] },
+      { username: "Albert", password: "albert123", roles: ["Spieletester"] }
+    ];
+
+    let pwBlurred = true;
+
+    function showAlert(msg, type = "ok") {
+      const el = document.getElementById("alertBox");
+      el.textContent = msg;
+      el.className = `alert ${type}`;
+    }
+
+    function normalizeAccount(acc) {
+      if (Array.isArray(acc.roles) && acc.roles.length > 0) {
+        return { username: acc.username, password: acc.password, roles: acc.roles };
+      }
+      return {
+        username: acc.username,
+        password: acc.password,
+        roles: acc.role ? [acc.role] : ["Spieletester"]
+      };
+    }
+
+    function loadAccounts() {
+      const raw = localStorage.getItem(STORAGE_USERS);
+      if (!raw) {
+        localStorage.setItem(STORAGE_USERS, JSON.stringify(INITIAL_USERS));
+        return INITIAL_USERS.map(normalizeAccount);
+      }
+      try {
+        const data = JSON.parse(raw);
+        return Array.isArray(data) ? data.map(normalizeAccount) : INITIAL_USERS.map(normalizeAccount);
+      } catch {
+        return INITIAL_USERS.map(normalizeAccount);
+      }
+    }
+
+    function saveAccounts(accounts) {
+      localStorage.setItem(STORAGE_USERS, JSON.stringify(accounts.map(normalizeAccount)));
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function buildRoleCheckboxes(containerId, selected = [], prefix = "r") {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      ROLES.forEach((role, i) => {
+        const checked = selected.includes(role) ? "checked" : "";
+        const id = `${prefix}_role_${i}`;
+        const lbl = document.createElement("label");
+        lbl.className = "role-option";
+        lbl.setAttribute("for", id);
+        lbl.innerHTML = `
+          <input type="checkbox" id="${id}" value="${escapeHtml(role)}" ${checked} />
+          <span>${escapeHtml(role)}</span>
+        `;
+        container.appendChild(lbl);
+      });
+    }
+
+    function readSelectedRoles(containerId, extraInputId) {
+      const checked = Array.from(
+        document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
+      ).map((cb) => cb.value);
+
+      const extraRaw = document.getElementById(extraInputId).value || "";
+      const extraList = extraRaw
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      const combined = [...checked, ...extraList];
+      const unique = [];
+      combined.forEach((item) => {
+        if (!unique.some((x) => x.toLowerCase() === item.toLowerCase())) {
+          unique.push(item);
+        }
+      });
+      return unique;
+    }
+
+    function applyPwBlur() {
+      const wrap = document.getElementById("tableWrapper");
+      const btn = document.getElementById("togglePwBtn");
+      if (pwBlurred) {
+        wrap.classList.add("pw-blurred");
+        btn.textContent = "Passwörter anzeigen";
+      } else {
+        wrap.classList.remove("pw-blurred");
+        btn.textContent = "Passwörter verbergen";
+      }
+    }
+
+    document.getElementById("togglePwBtn").addEventListener("click", () => {
+      pwBlurred = !pwBlurred;
+      applyPwBlur();
+    });
+
+    function getActiveUser() {
+      return localStorage.getItem(STORAGE_PERSIST) || sessionStorage.getItem(STORAGE_TEMP) || null;
+    }
+
+    function setActiveUser(username, remember) {
+      localStorage.removeItem(STORAGE_PERSIST);
+      sessionStorage.removeItem(STORAGE_TEMP);
+      if (remember) {
+        localStorage.setItem(STORAGE_PERSIST, username);
+      } else {
+        sessionStorage.setItem(STORAGE_TEMP, username);
+      }
+    }
+
+    function clearActiveUser() {
+      localStorage.removeItem(STORAGE_PERSIST);
+      sessionStorage.removeItem(STORAGE_TEMP);
+    }
+
+    function renderAccountsTable() {
+      const tbody = document.getElementById("accountRows");
+      const accounts = loadAccounts();
+      tbody.innerHTML = "";
+
+      accounts.forEach((acc) => {
+        const tags = (acc.roles || [])
+          .map((r) => `<span class="role-tag">${escapeHtml(r)}</span>`)
+          .join("");
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><strong>${escapeHtml(acc.username)}</strong></td>
+          <td><code class="pw-text">${escapeHtml(acc.password)}</code></td>
+          <td><div class="role-tags">${tags}</div></td>
+          <td style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button class="btn-ghost" type="button" onclick="startEditAccount('${encodeURIComponent(acc.username)}')">Bearbeiten</button>
+            <button class="btn-danger" type="button" onclick="removeAccount('${encodeURIComponent(acc.username)}')">Löschen</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      applyPwBlur();
+    }
+
+    window.startEditAccount = function(encodedName) {
+      const username = decodeURIComponent(encodedName);
+      const accounts = loadAccounts();
+      const target = accounts.find((a) => a.username === username);
+      if (!target) return;
+
+      document.getElementById("editPanel").classList.remove("hidden");
+      document.getElementById("editTargetName").textContent = target.username;
+      document.getElementById("editOldUser").value = target.username;
+      document.getElementById("editUser").value = target.username;
+      document.getElementById("editPass").value = target.password;
+
+      buildRoleCheckboxes("editRolesList", target.roles || [], "edit");
+      const custom = (target.roles || []).filter((r) => !ROLES.includes(r));
+      document.getElementById("editExtraRole").value = custom.join(", ");
+    };
+
+    window.removeAccount = function(encodedName) {
+      const username = decodeURIComponent(encodedName);
+      const accounts = loadAccounts();
+      if (accounts.length <= 1) {
+        showAlert("Der letzte Account kann nicht gelöscht werden.", "err");
+        return;
+      }
+      const next = accounts.filter((a) => a.username !== username);
+      saveAccounts(next);
+      renderAccountsTable();
+      showAlert(`Account „${username}“ gelöscht.`);
+    };
+
+    document.getElementById("saveEditBtn").addEventListener("click", () => {
+      if (!getActiveUser()) {
+        showAlert("Bitte zuerst einloggen.", "err");
+        return;
+      }
+
+      const oldUser = document.getElementById("editOldUser").value;
+      const newUser = document.getElementById("editUser").value.trim();
+      const newPass = document.getElementById("editPass").value;
+      const newRoles = readSelectedRoles("editRolesList", "editExtraRole");
+
+      if (!newUser || !newPass) {
+        showAlert("Username und Passwort dürfen nicht leer sein.", "err");
+        return;
+      }
+      if (newRoles.length === 0) {
+        showAlert("Bitte mindestens eine Rolle auswählen oder anhängen.", "err");
+        return;
+      }
+
+      const accounts = loadAccounts();
+      const exists = accounts.some(
+        (a) => a.username.toLowerCase() === newUser.toLowerCase() && a.username !== oldUser
+      );
+      if (exists) {
+        showAlert("Dieser Username existiert bereits.", "err");
+        return;
+      }
+
+      const updated = accounts.map((a) =>
+        a.username === oldUser ? { username: newUser, password: newPass, roles: newRoles } : a
+      );
+      saveAccounts(updated);
+
+      if (getActiveUser() === oldUser) {
+        const remembered = Boolean(localStorage.getItem(STORAGE_PERSIST));
+        setActiveUser(newUser, remembered);
+      }
+
+      document.getElementById("editPanel").classList.add("hidden");
+      renderAccountsTable();
+      refreshView();
+      showAlert(`Account „${newUser}“ gespeichert.`);
+    });
+
+    document.getElementById("cancelEditBtn").addEventListener("click", () => {
+      document.getElementById("editPanel").classList.add("hidden");
+    });
+
+    document.getElementById("createForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!getActiveUser()) {
+        showAlert("Nur eingeloggte Nutzer können Accounts erstellen.", "err");
+        return;
+      }
+
+      const username = document.getElementById("createUser").value.trim();
+      const password = document.getElementById("createPass").value;
+      const roles = readSelectedRoles("createRolesList", "createExtraRole");
+
+      if (!username || !password) {
+        showAlert("Bitte Username und Passwort ausfüllen.", "err");
+        return;
+      }
+      if (roles.length === 0) {
+        showAlert("Bitte mindestens eine Rolle anhängen.", "err");
+        return;
+      }
+
+      const accounts = loadAccounts();
+      if (accounts.some((a) => a.username.toLowerCase() === username.toLowerCase())) {
+        showAlert("Diesen Username gibt es schon.", "err");
+        return;
+      }
+
+      accounts.push({ username, password, roles });
+      saveAccounts(accounts);
+      e.target.reset();
+      buildRoleCheckboxes("createRolesList", ["Spieletester"], "create");
+      renderAccountsTable();
+      showAlert(`Account „${username}“ (${roles.join(", ")}) erstellt.`);
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("loginUser").value.trim();
+      const password = document.getElementById("loginPass").value;
+      const remember = document.getElementById("stayLoggedIn").checked;
+
+      const accounts = loadAccounts();
+      const match = accounts.find((a) => a.username === username && a.password === password);
+
+      if (!match) {
+        showAlert("Username oder Passwort falsch.", "err");
+        return;
+      }
+
+      setActiveUser(match.username, remember);
+      e.target.reset();
+      refreshView();
+      showAlert(`Eingeloggt als ${match.username}.`);
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      clearActiveUser();
+      pwBlurred = true;
+      document.getElementById("editPanel").classList.add("hidden");
+      refreshView();
+      showAlert("Abgemeldet.");
+    });
+
+    function loadGallery() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_GALLERY) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function saveGallery(items) {
+      localStorage.setItem(STORAGE_GALLERY, JSON.stringify(items));
+    }
+
+    function renderGallery() {
+      const box = document.getElementById("updateGallery");
+      const items = loadGallery();
+      box.innerHTML = "";
+
+      if (items.length === 0) {
+        box.innerHTML = `<p style="color: var(--muted);">Noch keine Bilder hochgeladen.</p>`;
+        return;
+      }
+
+      items.forEach((item, idx) => {
+        const card = document.createElement("div");
+        card.className = "shot";
+        card.innerHTML = `
+          <img src="${item.image}" alt="${escapeHtml(item.title)}" />
+          <div class="shot-info">
+            <h4>${escapeHtml(item.title)}</h4>
+            <p>${escapeHtml(item.desc || "")}</p>
+            <button class="btn-danger" type="button" onclick="deleteGalleryItem(${idx})">Löschen</button>
+          </div>
+        `;
+        box.appendChild(card);
+      });
+    }
+
+    window.deleteGalleryItem = function(idx) {
+      const items = loadGallery();
+      items.splice(idx, 1);
+      saveGallery(items);
+      renderGallery();
+      showAlert("Bild gelöscht.");
+    };
+
+    document.getElementById("updateImageForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!getActiveUser()) {
+        showAlert("Bitte zuerst einloggen.", "err");
+        return;
+      }
+
+      const title = document.getElementById("updateTitle").value.trim();
+      const desc = document.getElementById("updateText").value.trim();
+      const file = document.getElementById("updateFile").files[0];
+
+      if (!title || !file) {
+        showAlert("Bitte Titel und Bild angeben.", "err");
+        return;
+      }
+
+      if (file.size > 2 * 1024 * 1024) {
+        showAlert("Bitte ein Bild unter 2 MB wählen.", "err");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const items = loadGallery();
+        items.unshift({ title, desc, image: reader.result });
+        saveGallery(items);
+        e.target.reset();
+        renderGallery();
+        showAlert("Bild hinzugefügt.");
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function refreshView() {
+      const active = getActiveUser();
+      const loginView = document.getElementById("loginView");
+      const adminView = document.getElementById("adminView");
+      const badge = document.getElementById("userBadge");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const subtitle = document.getElementById("headerSubtitle");
+
+      if (active) {
+        const accounts = loadAccounts();
+        const userObj = accounts.find((a) => a.username === active);
+        loginView.classList.add("hidden");
+        adminView.classList.remove("hidden");
+        badge.classList.remove("hidden");
+        logoutBtn.classList.remove("hidden");
+        subtitle.textContent = "Admin, Vollzugriff – Accounts, Rollen und Passwörter verwalten";
+        const roleLabel = userObj && userObj.roles ? userObj.roles.join(", ") : "";
+        badge.textContent = userObj ? `${userObj.username} · ${roleLabel}` : active;
+        renderAccountsTable();
+        renderGallery();
+      } else {
+        loginView.classList.remove("hidden");
+        adminView.classList.add("hidden");
+        badge.classList.add("hidden");
+        logoutBtn.classList.add("hidden");
+        subtitle.textContent = "Login & Portal";
+      }
+    }
+
+    buildRoleCheckboxes("createRolesList", ["Spieletester"], "create");
+    buildRoleCheckboxes("editRolesList", [], "edit");
+    loadAccounts();
+    refreshView();
+  </script>
 </body>
 </html>
